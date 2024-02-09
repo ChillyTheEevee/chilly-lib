@@ -2,6 +2,9 @@ package world.sc2.config;
 
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 //All credit to spigotmc.org user Bimmr for this manager
@@ -25,10 +28,6 @@ public class ConfigManager {
         return configs.get(name);
     }
 
-    public Config saveConfig(String name) {
-        return getConfig(name).save();
-    }
-
     public Config reloadConfig(String name) {
         return getConfig(name).reload();
     }
@@ -40,8 +39,44 @@ public class ConfigManager {
     }
 
     public void saveConfigs() {
+        for (Config config : configs.values()) {
+            config.save();
+        }
+    }
+
+    public void saveAndUpdateConfigs() {
         for (String config : configs.keySet()) {
-            configs.get(config).save();
+            saveAndUpdateConfig(config);
+        }
+    }
+
+    public void saveAndUpdateConfig(String config){
+        saveConfig(config);
+        updateConfig(config);
+    }
+
+    /**
+     * If a config doesn't exist in the specified data folder, then the config is copied over from the jar file
+     * @param name The path to the config from the plugin's assigned data file
+     */
+    public void saveConfig(String name){
+        File config = new File(plugin.getDataFolder(), name);
+        if (!config.exists()){
+            plugin.saveResource(name, false);
+            getConfig(name).save();
+        }
+    }
+
+    /**
+     * Updates a config by comparing in the plugin's assigned data folder by copying over data from the jar file
+     * @param name The path to the config from the plugin's assigned data file
+     */
+    public void updateConfig(String name) {
+        File configFile = new File(plugin.getDataFolder(), name);
+        try {
+            ConfigUpdater.update(plugin, name, configFile, new ArrayList<>());
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
