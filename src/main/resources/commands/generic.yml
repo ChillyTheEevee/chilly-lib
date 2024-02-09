@@ -1,0 +1,3 @@
+messages:
+  warning_invalid_command: "&cInvalid command"
+  warning_no_permission: "&cYou do not have permission to use this command"
