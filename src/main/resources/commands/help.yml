@@ -1,0 +1,7 @@
+description: "Shows a summary of all commands for plugin"
+usage: "/plugin help"
+permission:
+  - "plugin.help"
+
+messages:
+  warning_invalid_number: "&cInvalid number"
