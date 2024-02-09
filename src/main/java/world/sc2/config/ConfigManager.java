@@ -39,20 +39,9 @@ public class ConfigManager {
     }
 
     public void saveConfigs() {
-        for (Config config : configs.values()) {
-            config.save();
-        }
-    }
-
-    public void saveAndUpdateConfigs() {
         for (String config : configs.keySet()) {
-            saveAndUpdateConfig(config);
+            saveConfig(config);
         }
-    }
-
-    public void saveAndUpdateConfig(String config){
-        saveConfig(config);
-        updateConfig(config);
     }
 
     /**
