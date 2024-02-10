@@ -49,4 +49,13 @@ public class ItemUtils {
             }
         }
     }
+
+    // Serialization and Deserialization
+    public static byte[] serializeItemStack(ItemStack itemStack) {
+        return itemStack.serializeAsBytes();
+    }
+
+    public static ItemStack deserializeItemStack(byte[] serializedItemStack) {
+        return ItemStack.deserializeBytes(serializedItemStack);
+    }
 }
