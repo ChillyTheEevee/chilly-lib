@@ -1,5 +1,6 @@
 package world.sc2.utility;
 
+import org.bukkit.Material;
 import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -8,7 +9,7 @@ import java.util.*;
 
 public class ItemUtils {
     public static boolean isAirOrNull(ItemStack i){
-        return i == null || i.getType().toString().contains("AIR");
+        return i == null || i.getType() == Material.AIR;
     }
 
     public static String getItemName(ItemStack i){
