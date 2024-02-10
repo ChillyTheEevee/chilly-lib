@@ -9,9 +9,9 @@ import java.util.List;
 
 public abstract class Command {
 
-	private static final String USAGE_KEY = "usage";
-	private static final String DESCRIPTION_KEY = "description";
-	private static final String PERMISSION_KEY = "permission";
+	protected static final String USAGE_KEY = "usage";
+	protected static final String DESCRIPTION_KEY = "description";
+	protected static final String PERMISSION_KEY = "permission";
 
 	protected Config config;
 

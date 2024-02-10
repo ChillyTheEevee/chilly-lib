@@ -1,6 +1,8 @@
 package world.sc2.command;
 
 import org.bukkit.command.CommandSender;
+import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.plugin.java.JavaPlugin;
 import world.sc2.config.Config;
 import world.sc2.utility.ChatUtils;
 
@@ -8,10 +10,13 @@ import java.util.*;
 
 public class HelpCommand extends Command {
 	private final String invalid_number;
+	private final JavaPlugin plugin;
 	private final List<Command> commands;
 
-	public HelpCommand(Config config, Map<String, Command> commands){
+	public HelpCommand(Config config, JavaPlugin plugin, Map<String, Command> commands){
 		super(config);
+
+		this.plugin = plugin;
 
 		invalid_number = config.get().getString("messages.warning_invalid_number");
 
@@ -86,16 +91,31 @@ public class HelpCommand extends Command {
 	@Override
 	public List<String> onTabComplete(CommandSender sender, String[] args) {
 		if (args.length == 2) {
-			List<String> subargs = new ArrayList<String>();
+			List<String> subargs = new ArrayList<>();
 			subargs.add("1");
 			subargs.add("2");
 			subargs.add("3");
 			subargs.add("...");
 			return subargs;
 		}
-		List<String> subargs = new ArrayList<String>();
+		List<String> subargs = new ArrayList<>();
 		subargs.add(" ");
 		return subargs;
+	}
+
+	@Override
+	public String[] getHelpEntry() {
+		YamlConfiguration config = this.config.get();
+		String pluginName = plugin.getName().toLowerCase();
+		return new String[]{
+				ChatUtils.chat("&8&m                                             "),
+				ChatUtils.chat("&d" + Objects.requireNonNull(config.getString(USAGE_KEY))
+						.replace("%s", pluginName)),
+				ChatUtils.chat("&7" + Objects.requireNonNull(config.getString(DESCRIPTION_KEY))
+						.replace("%s", pluginName)),
+				ChatUtils.chat("&7> &d" + Objects.requireNonNull(config.getString(PERMISSION_KEY))
+						.replace("%s", pluginName)),
+		};
 	}
 
 	public void addCommand(Command command) {

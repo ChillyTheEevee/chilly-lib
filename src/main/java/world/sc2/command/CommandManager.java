@@ -5,6 +5,8 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.command.PluginCommand;
 import org.bukkit.command.TabExecutor;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.jetbrains.annotations.NotNull;
+import world.sc2.config.Config;
 import world.sc2.config.ConfigManager;
 import world.sc2.utility.ChatUtils;
 
@@ -14,23 +16,35 @@ import java.util.List;
 import java.util.Map;
 
 public class CommandManager implements TabExecutor {
+
+	private static final String WARNING_INVALID_COMMAND_KEY = "messages.warning_invalid_command";
+	private static final String WARNING_NO_PERMISSION_KEY = "messages.warning_no_permission";
+
 	private final JavaPlugin plugin;
 	private final HelpCommand helpCommand;
+	private final Config baseCommandConfig;
 	private final Map<String, Command> commands = new HashMap<>();
-	private final String invalid_command;
-	private final String warning_no_permission;
 
 	public CommandManager(JavaPlugin plugin, ConfigManager configManager) {
 		this.plugin = plugin;
 
-		invalid_command = configManager.getConfig("commands/generic.yml").get().getString("messages.warning_invalid_command");
-		warning_no_permission = configManager.getConfig("commands/generic.yml").get().getString("messages.warning_no_permission");
+		String baseConfigPath = "commands/base_command.yml";
+		String helpConfigPath = "commands/help.yml";
+		String reloadConfigPath = "commands/reload.yml";
 
-		helpCommand = new HelpCommand(configManager.getConfig("commands/help.yml"), commands);
+		baseCommandConfig = configManager.getConfig(baseConfigPath);
+
+		Config helpConfig = configManager.getConfig(helpConfigPath);
+		Config reloadConfig = configManager.getConfig(reloadConfigPath);
+
+		configManager.saveAndUpdateConfig(baseConfigPath);
+		configManager.saveAndUpdateConfig(helpConfigPath);
+		configManager.saveAndUpdateConfig(reloadConfigPath);
+
+		helpCommand = new HelpCommand(helpConfig, plugin, commands);
 
 		addCommand("help", helpCommand);
-		addCommand("reload", new ReloadCommand(configManager.getConfig("commands/reload.yml"),
-				configManager));
+		addCommand("reload", new ReloadCommand(reloadConfig, plugin, configManager));
 
 		PluginCommand command = plugin.getCommand(plugin.getName());
 		if (command != null){
@@ -47,7 +61,8 @@ public class CommandManager implements TabExecutor {
 	}
 
 	@Override
-	public boolean onCommand(CommandSender sender, org.bukkit.command.Command cmd, String name, String[] args) {
+	public boolean onCommand(@NotNull CommandSender sender, org.bukkit.command.@NotNull Command cmd,
+							 @NotNull String name, String[] args) {
 		if (args.length == 0) {
 			try {
 				List<String> authors = plugin.getDescription().getAuthors();
@@ -83,7 +98,7 @@ public class CommandManager implements TabExecutor {
 					}
 				}
 				if (!hasPermission){
-					sender.sendMessage(ChatUtils.chat(warning_no_permission));
+					sender.sendMessage(ChatUtils.chat(baseCommandConfig.get().getString(WARNING_NO_PERMISSION_KEY)));
 					return true;
 				}
 				if (!commands.get(subCommand).onCommand(sender, args)) {
@@ -92,12 +107,12 @@ public class CommandManager implements TabExecutor {
 				return true;
 			}
 		}
-		sender.sendMessage(ChatUtils.chat(invalid_command));
+		sender.sendMessage(ChatUtils.chat(baseCommandConfig.get().getString(WARNING_INVALID_COMMAND_KEY)));
 		return true;
 	}
 
 	@Override
-	public List<String> onTabComplete(CommandSender sender, org.bukkit.command.Command cmd, String name, String[] args) {
+	public List<String> onTabComplete(@NotNull CommandSender sender, org.bukkit.command.@NotNull Command cmd, @NotNull String name, String[] args) {
 		if (args.length == 1) {
 			return new ArrayList<>(commands.keySet());
 		} else if (args.length > 1) {

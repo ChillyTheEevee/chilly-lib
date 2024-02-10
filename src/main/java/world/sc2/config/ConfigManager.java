@@ -69,4 +69,13 @@ public class ConfigManager {
         }
     }
 
+    /**
+     * Saves and updates the given config
+     * @param name The path to the config from the plugin's assigned data file
+     */
+    public void saveAndUpdateConfig(String name) {
+        saveConfig(name);
+        updateConfig(name);
+    }
+
 }

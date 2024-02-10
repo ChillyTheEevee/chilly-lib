@@ -1,7 +1,7 @@
 description: "Reloads all configs into the game"
-usage: "/plugin reload"
+usage: "/%s reload"
 permission:
-  - "plugin.reload"
+  - "%s.reload"
 
 messages:
   reload_successful: "&aReload complete!"
