@@ -6,6 +6,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataHolder;
 import org.bukkit.persistence.PersistentDataType;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * Represents all data stored within an NBT Tag. This data includes the {@link NamespacedKey} of the NBTTag, the
@@ -108,5 +109,27 @@ public class NBTTag<T, Z> {
     public void applyTag(PersistentDataHolder persistentDataHolder, Z data) {
         PersistentDataContainer dataContainer = persistentDataHolder.getPersistentDataContainer();
         dataContainer.set(namespacedKey, persistentDataType, data);
+    }
+
+    /**
+     * Retrieves the data stored within the NBTTag of the given {@link ItemStack}
+     * @param item The {@link ItemStack} to get the data of this NBT Tag from.
+     * @return the data mapped within the NBTTag of the {@link ItemStack} or null if the {@link ItemStack} does not
+     * contain this NBTTag
+     */
+    public Z getStoredData(@NotNull ItemStack item) throws IllegalStateException {
+        PersistentDataContainer dataContainer = item.getItemMeta().getPersistentDataContainer();
+        return dataContainer.get(namespacedKey, persistentDataType);
+    }
+
+    /**
+     * Retrieves the data stored within the NBTTag of the given {@link PersistentDataHolder}
+     * @param persistentDataHolder The {@link PersistentDataHolder} to get the data of this NBT Tag from.
+     * @return the data mapped within the NBTTag of the {@link PersistentDataHolder} or null if the
+     * {@link PersistentDataHolder} does not contain this NBTTag
+     */
+    public Z getStoredData(@NotNull PersistentDataHolder persistentDataHolder) {
+        PersistentDataContainer dataContainer = persistentDataHolder.getPersistentDataContainer();
+        return dataContainer.get(namespacedKey, persistentDataType);
     }
 }
