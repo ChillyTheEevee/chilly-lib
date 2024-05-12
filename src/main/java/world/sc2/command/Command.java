@@ -7,6 +7,9 @@ import world.sc2.utility.ChatUtils;
 
 import java.util.List;
 
+/**
+ * An abstract representation of a sub-command used after the base command of a {@link org.bukkit.plugin.Plugin}.
+ */
 public abstract class Command {
 
 	protected static final String USAGE_KEY = "usage";

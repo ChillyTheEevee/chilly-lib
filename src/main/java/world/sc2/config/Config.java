@@ -39,6 +39,11 @@ public class Config {
         return this.config;
     }
 
+    /**
+     * Saves the config stored within the plugin's jar file into its data directory. Throws an exception if this config
+     * does not exist within the plugin's jar file.
+     * @return This instance of Config.
+     */
     public Config saveDefaultConfig() {
         file = new File(plugin.getDataFolder(), this.name);
 

@@ -1,6 +1,7 @@
 package world.sc2.nbt;
 
 import org.bukkit.NamespacedKey;
+import org.bukkit.block.TileState;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataContainer;
@@ -15,7 +16,6 @@ import org.jetbrains.annotations.NotNull;
 public class NBTTag<T, Z> {
 
     private final NamespacedKey namespacedKey;
-
     private final PersistentDataType<T, Z> persistentDataType;
     private final Z defaultData;
 
@@ -68,7 +68,7 @@ public class NBTTag<T, Z> {
      * @param item The {@link ItemStack} to apply this NBT Tag to.
      * @throws IllegalStateException if called when default data was not supplied to the NBT Tag.
      */
-    public void applyTag(ItemStack item) {
+    public void applyTag(@NotNull ItemStack item) {
         if (defaultData == null) {
             throw new IllegalStateException("Attempted to apply NBT Tag " + namespacedKey + ", which does not have a " +
                     "set default value, to an item without supplying a value.");
@@ -83,7 +83,7 @@ public class NBTTag<T, Z> {
      * @param persistentDataHolder The {@link PersistentDataHolder} to apply this NBT Tag to.
      * @throws IllegalStateException if called when default data was not supplied to the NBT Tag.
      */
-    public void applyTag(PersistentDataHolder persistentDataHolder) {
+    public void applyTag(@NotNull PersistentDataHolder persistentDataHolder) {
         if (defaultData == null) {
             throw new IllegalStateException("Attempted to apply NBT Tag " + namespacedKey + ", which does not have a " +
                     "set default value, to a PersistentDataHolder without supplying a value.");
@@ -93,10 +93,26 @@ public class NBTTag<T, Z> {
     }
 
     /**
+     * Applies this NBT Tag to the {@link TileState} given.
+     * @param tileState The {@link TileState} to apply this NBT Tag to.
+     * @throws IllegalStateException if called when default data was not supplied to this NBT Tag.
+     */
+    public void applyTag(@NotNull TileState tileState) {
+        if (defaultData == null) {
+            throw new IllegalStateException("Attempted to apply NBT Tag " + namespacedKey + ", which does not have a " +
+                    "set default value, to a TileState without supplying a value.");
+        }
+        PersistentDataContainer dataContainer = tileState.getPersistentDataContainer();
+        dataContainer.set(namespacedKey, persistentDataType, defaultData);
+        tileState.update();
+    }
+
+    /**
      * Applies this NBT Tag to the {@link ItemStack} with the data given.
      * @param item The {@link ItemStack} to apply this NBT Tag to.
+     * @param data The data to apply when applying this NBT Tag.
      */
-    public void applyTag(ItemStack item, Z data) {
+    public void applyTag(@NotNull ItemStack item, Z data) {
         ItemMeta itemMeta = item.getItemMeta();
         applyTag(itemMeta, data);
         item.setItemMeta(itemMeta);
@@ -105,10 +121,22 @@ public class NBTTag<T, Z> {
     /**
      * Applies this NBT Tag to the {@link PersistentDataHolder} with the data given.
      * @param persistentDataHolder The {@link PersistentDataHolder} to apply this NBT Tag to.
+     * @param data The data to apply when applying this NBT Tag.
      */
-    public void applyTag(PersistentDataHolder persistentDataHolder, Z data) {
+    public void applyTag(@NotNull PersistentDataHolder persistentDataHolder, Z data) {
         PersistentDataContainer dataContainer = persistentDataHolder.getPersistentDataContainer();
         dataContainer.set(namespacedKey, persistentDataType, data);
+    }
+
+    /**
+     * Applies this NBT Tag to the {@link TileState} with the data given.
+     * @param tileState The {@link TileState} to apply this NBT Tag to.
+     * @param data The data to apply when applying this NBT Tag.
+     */
+    public void applyTag(@NotNull TileState tileState, Z data) {
+        PersistentDataContainer dataContainer = tileState.getPersistentDataContainer();
+        dataContainer.set(namespacedKey, persistentDataType, data);
+        tileState.update();
     }
 
     /**
@@ -132,4 +160,32 @@ public class NBTTag<T, Z> {
         PersistentDataContainer dataContainer = persistentDataHolder.getPersistentDataContainer();
         return dataContainer.get(namespacedKey, persistentDataType);
     }
+
+    /**
+     * Returns true if the given {@link ItemStack} contains this NBT Tag.
+     * @param item The ItemStack to check
+     * @return true if the given ItemStack contains this NBT Tag.
+     */
+     public boolean hasTag(@NotNull ItemStack item) {
+        return item.getItemMeta().getPersistentDataContainer().has(namespacedKey);
+     }
+
+    /**
+     * Returns true if the given {@link PersistentDataHolder} contains this NBT Tag.
+     * @param persistentDataHolder The PersistentDataHolder to check
+     * @return true if the given PersistentDataHolder contains this NBT Tag.
+     */
+     public boolean hasTag(@NotNull PersistentDataHolder persistentDataHolder) {
+        return persistentDataHolder.getPersistentDataContainer().has(namespacedKey);
+     }
+
+    /**
+     * Returns true if the given {@link TileState} contains this NBT Tag.
+     * @param tileState The TileState to check
+     * @return true if the given TileState contains this NBT Tag.
+     */
+    public boolean hasTag(@NotNull TileState tileState) {
+        return tileState.getPersistentDataContainer().has(namespacedKey);
+    }
+
 }
