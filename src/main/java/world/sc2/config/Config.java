@@ -20,6 +20,10 @@ public class Config {
         this.name = name;
     }
 
+    /**
+     * Saves this Config to the plugin's data folder. Any values changed by the plugin will be updated.
+     * @return This instance of Config
+     */
     public Config save() {
         if ((this.config == null) || (this.file == null))
             return this;

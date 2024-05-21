@@ -46,7 +46,9 @@ public class ConfigManager {
 
     /**
      * If a config doesn't exist in the specified data folder, then the config is copied over from the jar file. If the
-     * specified config is also not stored in the jar file, then a new empty config file is created.
+     * specified config is also not stored in the jar file, then a new empty config file is created. If the config
+     * does already exist in the specified data folder and any data was changed by the plugin, then any changes made
+     * will be saved into the config on the data folder.
      * @param name The path to the config from the plugin's assigned data file
      */
     public void saveConfig(String name){
@@ -64,6 +66,8 @@ public class ConfigManager {
                     throw new RuntimeException(e);
                 }
             }
+        } else {
+            getConfig(name).save();
         }
     }
 
