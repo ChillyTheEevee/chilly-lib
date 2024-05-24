@@ -1,128 +1,75 @@
 package world.sc2.command;
 
 import org.bukkit.Bukkit;
-import org.bukkit.command.CommandSender;
 import org.bukkit.command.PluginCommand;
-import org.bukkit.command.TabExecutor;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.jetbrains.annotations.NotNull;
 import world.sc2.config.Config;
 import world.sc2.config.ConfigManager;
-import world.sc2.utility.ChatUtils;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
-public class CommandManager implements TabExecutor {
+public class CommandManager {
 
-	private static final String WARNING_INVALID_COMMAND_KEY = "messages.warning_invalid_command";
-	private static final String WARNING_NO_PERMISSION_KEY = "messages.warning_no_permission";
+	private static final String COMMAND_CONFIG_DIRECTORY_PATH = "commands";
+	private static final String BASE_COMMAND_NAME = "base_command";
+	private static final String HELP_COMMAND_NAME = "help";
+	private static final String RELOAD_COMMAND_NAME = "reload";
 
-	private final JavaPlugin plugin;
-	private final HelpCommand helpCommand;
-	private final Config baseCommandConfig;
-	private final Map<String, Command> commands = new HashMap<>();
+
+	// Fields
+    private final HelpCommand helpCommand;
+	private final Map<String, Command> commandMap;
 
 	public CommandManager(JavaPlugin plugin, ConfigManager configManager) {
-		this.plugin = plugin;
+		this.commandMap = new HashMap<>();
 
-		String baseConfigPath = "commands/base_command.yml";
-		String helpConfigPath = "commands/help.yml";
-		String reloadConfigPath = "commands/reload.yml";
+		// Register Help and Reload commands.
+		String helpCommandConfigPath = getCommandConfigPath(HELP_COMMAND_NAME);
+		String reloadCommandConfigPath = getCommandConfigPath(RELOAD_COMMAND_NAME);
+		Config helpCommandConfig = configManager.getConfig(helpCommandConfigPath);
+		Config reloadCommandConfig = configManager.getConfig(reloadCommandConfigPath);
+		configManager.saveAndUpdateConfig(helpCommandConfigPath);
+		configManager.saveAndUpdateConfig(reloadCommandConfigPath);
 
-		baseCommandConfig = configManager.getConfig(baseConfigPath);
+		helpCommand = new HelpCommand(helpCommandConfig, plugin, commandMap);
 
-		Config helpConfig = configManager.getConfig(helpConfigPath);
-		Config reloadConfig = configManager.getConfig(reloadConfigPath);
+		registerCommand("help", helpCommand);
+		registerCommand("reload", new ReloadCommand(reloadCommandConfig, plugin, configManager));
 
-		configManager.saveAndUpdateConfig(baseConfigPath);
-		configManager.saveAndUpdateConfig(helpConfigPath);
-		configManager.saveAndUpdateConfig(reloadConfigPath);
+		// Create and register base plugin command
+		String baseCommandConfigPath = getCommandConfigPath(BASE_COMMAND_NAME);
+		Config baseCommandConfig = configManager.getConfig(baseCommandConfigPath);
+		configManager.saveAndUpdateConfig(baseCommandConfigPath);
 
-		helpCommand = new HelpCommand(helpConfig, plugin, commands);
-
-		addCommand("help", helpCommand);
-		addCommand("reload", new ReloadCommand(reloadConfig, plugin, configManager));
+        BaseCommand pluginBaseCommand = new BaseCommand(plugin, commandMap, baseCommandConfig);
 
 		PluginCommand command = plugin.getCommand(plugin.getName());
 		if (command != null){
-			command.setExecutor(this);
+			command.setExecutor(pluginBaseCommand);
 		} else {
 			Bukkit.getLogger().severe("Could not create " + plugin.getName() + "'s super command because the"
 			+ " command is not specified in plugin.yml");
 		}
 	}
 
-	public void addCommand(String commandName, Command command) {
-		commands.put(commandName, command);
+	/**
+	 * Registers the given {@link Command} into this CommandManager using the given String commandName.
+	 * @param commandName The CommandName to assign the command within this CommandManager.
+	 * @param command The Command to register.
+	 */
+	public void registerCommand(String commandName, Command command) {
+		commandMap.put(commandName, command);
 		helpCommand.addCommand(command);
 	}
 
-	@Override
-	public boolean onCommand(@NotNull CommandSender sender, org.bukkit.command.@NotNull Command cmd,
-							 @NotNull String name, String[] args) {
-		if (args.length == 0) {
-			try {
-				List<String> authors = plugin.getDescription().getAuthors();
-				if (authors.size() > 1) {
-					sender.sendMessage(ChatUtils.chat(String.format("&d%s v%s by %s",
-							plugin.getName(),
-							plugin.getDescription().getVersion(),
-							authors)));
-				} else if (authors.size() == 1) {
-					sender.sendMessage(ChatUtils.chat(String.format("&d%s v%s by %s",
-							plugin.getName(),
-							plugin.getDescription().getVersion(),
-							authors.get(0))));
-				} else {
-						sender.sendMessage(ChatUtils.chat(String.format("&d%s v%s",
-								plugin.getName(),
-								plugin.getDescription().getVersion())));
-					}
-				} catch (Exception e) {
-				Bukkit.getLogger().severe("Plugin " + plugin.getName() + " does not have a Description!");
-			}
-			sender.sendMessage(ChatUtils.chat("&7/" + plugin.getName().toLowerCase() + " help"));
-			return true;
-		}
-		
-		for (String subCommand : commands.keySet()) {
-			if (args[0].equalsIgnoreCase(subCommand)) {
-				boolean hasPermission = false;
-				for (String permission : commands.get(subCommand).getRequiredPermission()){
-					if (sender.hasPermission(permission)){
-						hasPermission = true;
-						break;
-					}
-				}
-				if (!hasPermission){
-					sender.sendMessage(ChatUtils.chat(baseCommandConfig.get().getString(WARNING_NO_PERMISSION_KEY)));
-					return true;
-				}
-				if (!commands.get(subCommand).onCommand(sender, args)) {
-					sender.sendMessage(ChatUtils.chat(commands.get(subCommand).getUsageMessage()));
-				}
-				return true;
-			}
-		}
-		sender.sendMessage(ChatUtils.chat(baseCommandConfig.get().getString(WARNING_INVALID_COMMAND_KEY)));
-		return true;
-	}
-
-	@Override
-	public List<String> onTabComplete(@NotNull CommandSender sender, org.bukkit.command.@NotNull Command cmd, @NotNull String name, String[] args) {
-		if (args.length == 1) {
-			return new ArrayList<>(commands.keySet());
-		} else if (args.length > 1) {
-			for (String arg : commands.keySet()) {
-				if (args[0].equalsIgnoreCase(arg)) {
-					return commands.get(arg).onTabComplete(sender, args);
-				}
-			}
-		}
-		return null;
+	/**
+	 * Returns the String path to a Command's Config file given its Command name.
+	 * @param commandName The name of a Command.
+	 * @return the String path to a Command's Config file given its Command name.
+	 */
+	private String getCommandConfigPath(String commandName) {
+        return COMMAND_CONFIG_DIRECTORY_PATH + "/" + commandName + ".yml";
 	}
 
 }
