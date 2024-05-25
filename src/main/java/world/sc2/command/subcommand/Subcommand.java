@@ -1,4 +1,4 @@
-package world.sc2.command;
+package world.sc2.command.subcommand;
 
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -8,9 +8,10 @@ import world.sc2.utility.ChatUtils;
 import java.util.List;
 
 /**
- * An abstract representation of a sub-command used after the base command of a {@link org.bukkit.plugin.Plugin}.
+ * An abstract representation of a subcommand used after the {@link world.sc2.command.BaseCommand} of a plugin. Each
+ * subcommand is designed to be treated similar to a normal paper-spigot Command.
  */
-public abstract class Command {
+public abstract class Subcommand {
 
 	protected static final String USAGE_KEY = "usage";
 	protected static final String DESCRIPTION_KEY = "description";
@@ -18,7 +19,7 @@ public abstract class Command {
 
 	protected Config config;
 
-	public Command(Config config) {
+	public Subcommand(Config config) {
 		this.config = config;
 	}
 	public abstract boolean onCommand(CommandSender sender, String[] args);

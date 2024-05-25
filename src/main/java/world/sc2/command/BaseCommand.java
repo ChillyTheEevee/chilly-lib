@@ -5,6 +5,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabExecutor;
 import org.bukkit.plugin.Plugin;
 import org.jetbrains.annotations.NotNull;
+import world.sc2.command.subcommand.Subcommand;
 import world.sc2.config.Config;
 import world.sc2.utility.ChatUtils;
 
@@ -24,7 +25,7 @@ public class BaseCommand implements TabExecutor {
     // Dependencies
     private final Plugin plugin;
     private final Config baseCommandConfig;
-    private final Map<String, Command> commandMap;
+    private final Map<String, Subcommand> commandMap;
 
     /**
      * Constructs BaseCommand for the given plugin using the map of commands and the plugin's baseCommandConfig.
@@ -32,7 +33,7 @@ public class BaseCommand implements TabExecutor {
      * @param commandMap A map of all subcommands registered for the plugin.
      * @param baseCommandConfig The {@link Config} for this BaseCommand.
      */
-    public BaseCommand(Plugin plugin, Map<String, Command> commandMap, Config baseCommandConfig) {
+    public BaseCommand(Plugin plugin, Map<String, Subcommand> commandMap, Config baseCommandConfig) {
         this.plugin = plugin;
         this.baseCommandConfig = baseCommandConfig;
         this.commandMap = commandMap;
