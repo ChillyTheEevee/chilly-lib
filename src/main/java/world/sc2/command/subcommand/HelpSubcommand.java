@@ -1,4 +1,4 @@
-package world.sc2.command;
+package world.sc2.command.subcommand;
 
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -8,21 +8,21 @@ import world.sc2.utility.ChatUtils;
 
 import java.util.*;
 
-public class HelpCommand extends Command {
+public class HelpSubcommand extends Subcommand {
 	private final String invalid_number;
 	private final JavaPlugin plugin;
-	private final List<Command> commands;
+	private final List<Subcommand> subcommands;
 
-	public HelpCommand(Config config, JavaPlugin plugin, Map<String, Command> commands){
+	public HelpSubcommand(Config config, JavaPlugin plugin, Map<String, Subcommand> commands){
 		super(config);
 
 		this.plugin = plugin;
 
 		invalid_number = config.get().getString("messages.warning_invalid_number");
 
-		this.commands = new ArrayList<>();
+		this.subcommands = new ArrayList<>();
 		for (String key : commands.keySet()) {
-			this.commands.add(commands.get(key));
+			this.subcommands.add(commands.get(key));
 		}
 	}
 
@@ -33,7 +33,7 @@ public class HelpCommand extends Command {
 		List<String[]> helpEntries = new ArrayList<>();
 		List<String> helpLines = new ArrayList<>();
 		
-		for (Command c : commands) {
+		for (Subcommand c : subcommands) {
 			for (String permission : c.getRequiredPermission()) {
 				if (sender.hasPermission(permission)) {
 					helpEntries.add(c.getHelpEntry());
@@ -47,7 +47,7 @@ public class HelpCommand extends Command {
 
 		helpCommandList = ChatUtils.paginateTextList(12, helpLines);
 		
-		if (helpCommandList.size() == 0) {
+		if (helpCommandList.isEmpty()) {
 			return true;
 		}
 		
@@ -118,8 +118,8 @@ public class HelpCommand extends Command {
 		};
 	}
 
-	public void addCommand(Command command) {
-		commands.add(command);
+	public void registerSubcommand(Subcommand subcommand) {
+		subcommands.add(subcommand);
 	}
 
 }

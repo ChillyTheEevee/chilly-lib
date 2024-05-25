@@ -1,4 +1,4 @@
-package world.sc2.command;
+package world.sc2.command.subcommand;
 
 import org.bukkit.Sound;
 import org.bukkit.command.CommandSender;
@@ -12,14 +12,14 @@ import world.sc2.utility.ChatUtils;
 import java.util.List;
 import java.util.Objects;
 
-public class ReloadCommand extends Command {
+public class ReloadSubcommand extends Subcommand {
 
 	private final ConfigManager configManager;
 	private final JavaPlugin plugin;
 
 	private static final String reloadSuccessfulMessageKey = "messages.reload_successful";
 
-	public ReloadCommand(Config config, JavaPlugin plugin, ConfigManager configManager){
+	public ReloadSubcommand(Config config, JavaPlugin plugin, ConfigManager configManager){
 		super(config);
 		this.plugin = plugin;
 		this.configManager = configManager;
