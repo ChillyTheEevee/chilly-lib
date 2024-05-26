@@ -140,6 +140,35 @@ public class NBTTag<T, Z> {
     }
 
     /**
+     * Removes this NBTTag and all stored data from the {@link ItemStack} given.
+     * @param item The {@link ItemStack} to remove this NBT Tag from.
+     */
+    public void removeTag(@NotNull ItemStack item) {
+        ItemMeta itemMeta = item.getItemMeta();
+        removeTag(itemMeta);
+        item.setItemMeta(itemMeta);
+    }
+
+    /**
+     * Removes this NBTTag and all stored data from the {@link PersistentDataHolder} given.
+     * @param persistentDataHolder The {@link PersistentDataHolder} to remove this NBT Tag from.
+     */
+    public void removeTag(@NotNull PersistentDataHolder persistentDataHolder) {
+        PersistentDataContainer dataContainer = persistentDataHolder.getPersistentDataContainer();
+        dataContainer.remove(namespacedKey);
+    }
+
+    /**
+     * Removes this NBTTag and all stored data from the {@link TileState} given.
+     * @param tileState The {@link TileState} to remove this NBT Tag from.
+     */
+    public void removeTag(@NotNull TileState tileState) {
+        PersistentDataContainer persistentDataContainer = tileState.getPersistentDataContainer();
+        persistentDataContainer.remove(namespacedKey);
+        tileState.update();
+    }
+
+    /**
      * Retrieves the data stored within the NBTTag of the given {@link ItemStack}
      * @param item The {@link ItemStack} to get the data of this NBT Tag from.
      * @return the data mapped within the NBTTag of the {@link ItemStack} or null if the {@link ItemStack} does not
