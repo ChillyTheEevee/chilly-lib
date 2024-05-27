@@ -63,11 +63,11 @@ public abstract class Subcommand {
 	}
 
 	/**
-	 * Returns the usage message of this Subcommand found within its {@link Config} with an added red escape code.
-	 * @return the usage message of this Subcommand found within its {@link Config} with an added red escape code.
+	 * Returns the usage message of this Subcommand found within its {@link Config}.
+	 * @return the usage message of this Subcommand found within its {@link Config}.
 	 */
 	public String getUsageMessage() {
-		return "&4" + config.get().get(USAGE_KEY);
+		return "" + config.get().get(USAGE_KEY);
 	}
 
 	/**

@@ -81,7 +81,7 @@ public class BaseCommand implements TabExecutor {
                     return true;
                 }
                 if (!commandMap.get(subCommand).onCommand(sender, args)) {
-                    sender.sendMessage(ChatUtils.chat(commandMap.get(subCommand).getUsageMessage()));
+                    sender.sendMessage(ChatUtils.chat("&4" + commandMap.get(subCommand).getUsageMessage()));
                 }
                 return true;
             }
