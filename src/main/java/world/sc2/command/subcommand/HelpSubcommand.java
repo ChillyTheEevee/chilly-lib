@@ -8,12 +8,25 @@ import world.sc2.utility.ChatUtils;
 
 import java.util.*;
 
+/**
+ * A special {@link Subcommand} that is automatically generated for every plugin running chilly-lib. This command prints
+ * a messages that shows all registered commands for the plugins along with their usages and descriptions.
+ */
 public class HelpSubcommand extends Subcommand {
 	private final String invalid_number;
 	private final JavaPlugin plugin;
 	private final List<Subcommand> subcommands;
 
-	public HelpSubcommand(Config config, JavaPlugin plugin, Map<String, Subcommand> commands){
+	/**
+	 * Constructs a new HelpSubcommand from the given {@link Config}. This Config must contain the "usage",
+	 * "description", and "permission" fields. This HelpSubcommand also requires an instance of the plugin for which
+	 * this Subcommand is registered under as well as a Map of all subcommands registered under the plugin. This
+	 * subcommand is automatically constructed by the {@link SubcommandManager} class.
+	 * @param config The configuration file for this Subcommand.
+	 * @param plugin The instance of the plugin for which this HelpSubcommand is registered.
+	 * @param subcommands A Map of all Subcommands used by this plugin.
+	 */
+	public HelpSubcommand(Config config, JavaPlugin plugin, Map<String, Subcommand> subcommands){
 		super(config);
 
 		this.plugin = plugin;
@@ -21,8 +34,8 @@ public class HelpSubcommand extends Subcommand {
 		invalid_number = config.get().getString("messages.warning_invalid_number");
 
 		this.subcommands = new ArrayList<>();
-		for (String key : commands.keySet()) {
-			this.subcommands.add(commands.get(key));
+		for (String key : subcommands.keySet()) {
+			this.subcommands.add(subcommands.get(key));
 		}
 	}
 
@@ -118,6 +131,10 @@ public class HelpSubcommand extends Subcommand {
 		};
 	}
 
+	/**
+	 * Registers the given {@link Subcommand} into this HelpSubcommand.
+	 * @param subcommand the Subcommand to register into this HelpSubcommand.
+	 */
 	public void registerSubcommand(Subcommand subcommand) {
 		subcommands.add(subcommand);
 	}
