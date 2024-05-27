@@ -24,7 +24,7 @@ public class ConfigUpdater {
 
     /**
      * Update a yaml file from a resource inside your plugin jar
-     * @param plugin You plugin
+     * @param plugin Your plugin
      * @param resourceName The yaml file name to update from, typically config.yml
      * @param toUpdate The yaml file to update
      * @param ignoredSections List of sections to ignore and copy from the current config

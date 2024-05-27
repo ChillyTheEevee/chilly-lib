@@ -12,6 +12,10 @@ import world.sc2.utility.ChatUtils;
 import java.util.List;
 import java.util.Objects;
 
+/**
+ * A special {@link Subcommand} that is automatically generated for every plugin running chilly-lib. This command
+ * reloads all {@link Config}s for the plugin by calling {@link ConfigManager#reloadConfigs()}.
+ */
 public class ReloadSubcommand extends Subcommand {
 
 	private final ConfigManager configManager;

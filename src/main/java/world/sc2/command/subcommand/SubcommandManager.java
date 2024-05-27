@@ -10,6 +10,10 @@ import world.sc2.config.ConfigManager;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * The manager of all {@link Subcommand} related tasks. Individual plugins must construct this SubcommandManager and
+ * individually register each of the Subcommands they create.
+ */
 public class SubcommandManager {
 
 	private static final String COMMAND_CONFIG_DIRECTORY_PATH = "commands";

@@ -9,6 +9,12 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 import java.nio.charset.StandardCharsets;
 
+/**
+ * A representation of a YAML configuration file within a {@link org.bukkit.plugin.Plugin}'s jar file or data directory.
+ * Each Config has an internal {@link YamlConfiguration} file and contains methods for saving this Config and reloading
+ * the Config into the game. The YamlConfiguration returned by {@link Config#get()} may change after calling the
+ * {@link Config#reload()} command.
+ */
 public class Config {
     private final String name;
     private File file;
@@ -44,8 +50,9 @@ public class Config {
     }
 
     /**
-     * Saves the config stored within the plugin's jar file into its data directory. Throws an exception if this config
-     * does not exist within the plugin's jar file.
+     * Saves the config stored within the plugin's jar file into its data directory. This method will not replace a
+     * configuration file if it is already present. Throws an exception if this config does not exist within the
+     * plugin's jar file.
      * @return This instance of Config.
      */
     public Config saveDefaultConfig() {
@@ -56,6 +63,12 @@ public class Config {
         return this;
     }
 
+    /**
+     * Reloads this Config to reflect any external changes made to it since instantiation. If the YamlConfiguration
+     * stored within the plugin's data directory is missing some keys present within the plugin's jar file, then the
+     * values of those keys will be copied over as the default values of this Config.
+     * @return This Config.
+     */
     public Config reload() {
         if (file == null)
             this.file = new File(plugin.getDataFolder(), this.name);
@@ -75,16 +88,34 @@ public class Config {
         return this;
     }
 
+    /**
+     *
+     * @param force
+     * @return
+     */
     public Config copyDefaults(boolean force) {
         get().options().copyDefaults(force);
         return this;
     }
 
+    /**
+     * A convenience method for setting a key-value pair inside the internal {@link YamlConfiguration} of this Config.
+     * @param key The key to set
+     * @param value The value to set
+     * @return This Config
+     */
     public Config set(String key, Object value) {
         get().set(key, value);
         return this;
     }
 
+    /**
+     * A convenience method for getting the value of a key-value pair inside the internal {@link YamlConfiguration} of
+     * this Config.
+     * @param key The key to get the value from.
+     * @return The Object stored at the given key within this Config's YamlConfiguration, or null if the key does not
+     * exist within the YamlConfiguration.
+     */
     public Object get(String key) {
         return get().get(key);
     }
