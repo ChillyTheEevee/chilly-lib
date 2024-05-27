@@ -25,9 +25,18 @@ public abstract class Subcommand {
 	 * Constructs a new Subcommand from the given {@link Config}. This Config must contain the "usage", "description",
 	 * and "permission" fields.
 	 * @param config The configuration file for this Subcommand.
+	 * @throws IllegalArgumentException If the given Config doesn't contain the "usage", "description", and "permission"
+	 * fields.
 	 */
 	public Subcommand(Config config) {
 		this.config = config;
+
+		YamlConfiguration yamlConfig = config.get();
+		if (!yamlConfig.contains(USAGE_KEY) || !yamlConfig.contains(DESCRIPTION_KEY) ||
+				!yamlConfig.contains(PERMISSION_KEY)) {
+			throw new IllegalArgumentException("Config supplied to Subcommand does not have one or more of the required"
+					+ " \"usage\", \"description\", or \"permission\" keys.");
+		}
 	}
 
 	/**
