@@ -21,35 +21,40 @@ public abstract class Subcommand {
 
 	protected Config config;
 
+	/**
+	 * Constructs a new Subcommand from the given {@link Config}. This Config must contain the "usage", "description",
+	 * and "permission" fields.
+	 * @param config The configuration file for this Subcommand.
+	 */
 	public Subcommand(Config config) {
 		this.config = config;
 	}
 
 	/**
-	 * Called whenever this Command is executed by a {@link CommandSender}. The first argument of this command will
-	 * always be the name of this Command, and thus the minimum size of args is 1.
-	 * @param sender The CommandSender who invoked this command.
-	 * @param args The arguments the sender invoked with this command call. The first element of this array is
-	 *             always the name of this Command.
-	 * @return true if this Command's syntax was used properly.
+	 * Called whenever this Subcommand is executed by a {@link CommandSender}. The first argument of this subcommand
+	 * will always be the name of this Subcommand, and thus the minimum size of args is 1.
+	 * @param sender The CommandSender who invoked this subcommand.
+	 * @param args The arguments the sender invoked with this subcommand call. The first element of this array is
+	 *             always the name of this Subcommand.
+	 * @return true if this Subcommand's syntax was used properly.
 	 */
 	public abstract boolean onCommand(CommandSender sender, String[] args);
 
 	/**
-	 * Called whenever a plugin's base command is prompted for a tab completion and this command's name was the first
-	 * argument of the base command. The first entry in args will always be the name of this Command.
-	 * @param sender The CommandSender that is typing this command.
+	 * Called whenever a plugin's base command is prompted for a tab completion and this subcommand's name was the first
+	 * argument of the base command. The first entry in args will always be the name of this Subcommand.
+	 * @param sender The CommandSender that is typing out the Subcommand.
 	 * @param args The arguments the user has already typed. The first element of this array will always be the name of
-	 *             this Command.
+	 *             this Subcommand.
 	 * @return A List of Strings that represents the tab complete options of this command given they've already typed
 	 * the given arguments.
 	 */
 	public abstract List<String> onTabComplete(CommandSender sender, String[] args);
 
 	/**
-	 * Returns a String array of permissions that a CommandSender may have to execute this Command. If a CommandSender
-	 * has any one of these permissions, they have the ability to execute this command. This permissions array is
-	 * defined within this Command's {@link Config}.
+	 * Returns a String array of permissions that a CommandSender may have to execute this Subcommand. If a
+	 * CommandSender has any one of these permissions, they have the ability to execute this command. This permissions
+	 * array is defined within this Command's {@link Config} under the "permissions" key.
 	 * @return The permission array of this Command defined within its Config.
 	 */
 	public String[] getRequiredPermission() {
@@ -58,16 +63,16 @@ public abstract class Subcommand {
 	}
 
 	/**
-	 * Returns the usage message of this Command found within its {@link Config} with an added red escape code.
-	 * @return the usage message of this Command found within its {@link Config} with an added red escape code.
+	 * Returns the usage message of this Subcommand found within its {@link Config} with an added red escape code.
+	 * @return the usage message of this Subcommand found within its {@link Config} with an added red escape code.
 	 */
 	public String getUsageMessage() {
 		return "&4" + config.get().get(USAGE_KEY);
 	}
 
 	/**
-	 * Returns the formatted help entry of this Command using this Command's {@link Config}.
-	 * @return the formatted help entry of this Command using this Command's {@link Config}.
+	 * Returns the formatted help entry of this Subcommand using this Subcommand's {@link Config}.
+	 * @return the formatted help entry of this Subcommand using this Subcommand's {@link Config}.
 	 */
 	public String[] getHelpEntry() {
 		YamlConfiguration config = this.config.get();
