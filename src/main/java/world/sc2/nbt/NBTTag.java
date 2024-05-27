@@ -174,7 +174,7 @@ public class NBTTag<T, Z> {
      * @return the data mapped within the NBTTag of the {@link ItemStack} or null if the {@link ItemStack} does not
      * contain this NBTTag
      */
-    public Z getStoredData(@NotNull ItemStack item) throws IllegalStateException {
+    public Z getStoredData(@NotNull ItemStack item) {
         PersistentDataContainer dataContainer = item.getItemMeta().getPersistentDataContainer();
         return dataContainer.get(namespacedKey, persistentDataType);
     }
