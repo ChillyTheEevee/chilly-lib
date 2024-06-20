@@ -1,10 +1,10 @@
-package world.sc2.command.subcommand;
+package live.chillytheeevee.command.subcommand;
 
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
-import world.sc2.config.Config;
-import world.sc2.utility.ChatUtils;
+import live.chillytheeevee.config.Config;
+import live.chillytheeevee.utility.ChatUtils;
 
 import java.util.*;
 

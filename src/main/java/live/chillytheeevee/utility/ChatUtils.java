@@ -1,4 +1,4 @@
-package world.sc2.utility;
+package live.chillytheeevee.utility;
 
 import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Color;

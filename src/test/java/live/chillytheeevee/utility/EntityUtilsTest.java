@@ -1,5 +1,6 @@
-package world.sc2.utility;
+package live.chillytheeevee.utility;
 
+import live.chillytheeevee.utility.EntityUtils;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Projectile;
@@ -34,19 +35,19 @@ class EntityUtilsTest {
     @DisplayName("EntityUtils.getRealAttacker(): If entity is a projectile, then its LivingEntity shooter is returned")
     @Test
     void whenGetRealAttacker_ifEntityIsProjectileShotByLivingEntity_thenReturnItsShooter() {
-        assertEquals(world.sc2.utility.EntityUtils.getRealAttacker(mockProjectile), mockShooter);
+        assertEquals(EntityUtils.getRealAttacker(mockProjectile), mockShooter);
     }
 
     @DisplayName("EntityUtils.getRealAttacker(): If parameter entity is a LivingEntity, then parameter is returned")
     @Test
     void whenGetRealAttacker_ifGivenEntityIsInstanceofLivingEntity_thenReturnGivenEntity() {
-        assertEquals(world.sc2.utility.EntityUtils.getRealAttacker(mockShooter), mockShooter);
+        assertEquals(EntityUtils.getRealAttacker(mockShooter), mockShooter);
     }
 
     @DisplayName("EntityUtils.getRealAttacker(): If parameter entity is not a projectile nor a LivingEntity," +
             " null is returned")
     @Test
     void whenGetRealAttacker_ifGivenEntityIsNotALivingEntityOrProjectile_thenReturnNull() {
-        assertNull(world.sc2.utility.EntityUtils.getRealAttacker(mockNonLivingEntity));
+        assertNull(EntityUtils.getRealAttacker(mockNonLivingEntity));
     }
 }

@@ -1,4 +1,4 @@
-package world.sc2.utility;
+package live.chillytheeevee.utility;
 
 import org.bukkit.ChatColor;
 import org.bukkit.Sound;

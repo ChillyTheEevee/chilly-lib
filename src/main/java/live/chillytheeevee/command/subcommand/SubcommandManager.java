@@ -1,11 +1,11 @@
-package world.sc2.command.subcommand;
+package live.chillytheeevee.command.subcommand;
 
 import org.bukkit.Bukkit;
 import org.bukkit.command.PluginCommand;
 import org.bukkit.plugin.java.JavaPlugin;
-import world.sc2.command.BaseCommand;
-import world.sc2.config.Config;
-import world.sc2.config.ConfigManager;
+import live.chillytheeevee.command.BaseCommand;
+import live.chillytheeevee.config.Config;
+import live.chillytheeevee.config.ConfigManager;
 
 import java.util.HashMap;
 import java.util.Map;

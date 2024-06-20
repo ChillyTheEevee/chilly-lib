@@ -1,4 +1,4 @@
-package world.sc2.utility;
+package live.chillytheeevee.utility;
 
 import org.bukkit.Material;
 import org.bukkit.entity.Item;
