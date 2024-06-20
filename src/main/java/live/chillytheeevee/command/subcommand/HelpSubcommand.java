@@ -1,4 +1,4 @@
-package world.sc2.command.subcommand;
+package live.chillytheeevee.command.subcommand;
 
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.YamlConfiguration;

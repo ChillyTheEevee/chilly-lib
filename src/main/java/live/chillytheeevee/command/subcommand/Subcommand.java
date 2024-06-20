@@ -1,5 +1,6 @@
-package world.sc2.command.subcommand;
+package live.chillytheeevee.command.subcommand;
 
+import live.chillytheeevee.command.BaseCommand;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.YamlConfiguration;
 import world.sc2.config.Config;
@@ -8,7 +9,7 @@ import world.sc2.utility.ChatUtils;
 import java.util.List;
 
 /**
- * An abstract representation of a subcommand used after the {@link world.sc2.command.BaseCommand} of a plugin. Each
+ * An abstract representation of a subcommand used after the {@link BaseCommand} of a plugin. Each
  * subcommand is designed to be treated similar to a normal paper-spigot Command. All
  * Commands must have a {@link Config} with at least the "usage", "description", and "permission" keys filled out in
  * order to function.
