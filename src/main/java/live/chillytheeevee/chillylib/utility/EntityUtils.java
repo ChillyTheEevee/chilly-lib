@@ -1,4 +1,4 @@
-package live.chillytheeevee.utility;
+package live.chillytheeevee.chillylib.utility;
 
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
@@ -14,18 +14,19 @@ import java.util.HashSet;
 public class EntityUtils {
 
 
-    public static LivingEntity getRealAttacker(Entity e){
-        if (e instanceof Projectile){
-            if (((Projectile) e).getShooter() instanceof LivingEntity) return (LivingEntity) ((Projectile) e).getShooter();
+    public static LivingEntity getRealAttacker(Entity e) {
+        if (e instanceof Projectile) {
+            if (((Projectile) e).getShooter() instanceof LivingEntity)
+                return (LivingEntity) ((Projectile) e).getShooter();
         }
         if (e instanceof LivingEntity) return (LivingEntity) e;
         return null;
     }
 
-    public static void applyPotionEffectIfStronger(LivingEntity entity, PotionEffect effect){
+    public static void applyPotionEffectIfStronger(LivingEntity entity, PotionEffect effect) {
         PotionEffect existingEffect = entity.getPotionEffect(effect.getType());
-        if (existingEffect != null){
-            if (existingEffect.getAmplifier() <= effect.getAmplifier()){
+        if (existingEffect != null) {
+            if (existingEffect.getAmplifier() <= effect.getAmplifier()) {
                 entity.addPotionEffect(effect);
             }
         } else {
@@ -36,22 +37,22 @@ public class EntityUtils {
     private static String errorPlayerNotFound = "&cPlayer not found";
     private static String errorMalformedTargeter = "&cMalformed target selector";
 
-    public static Collection<Player> selectPlayers(CommandSender source, String selector){
+    public static Collection<Player> selectPlayers(CommandSender source, String selector) {
         Collection<Player> targets = new HashSet<>();
-        if (selector.startsWith("@")){
+        if (selector.startsWith("@")) {
             try {
-                for (Entity part : Bukkit.selectEntities(source, selector)){
-                    if (part instanceof Player){
+                for (Entity part : Bukkit.selectEntities(source, selector)) {
+                    if (part instanceof Player) {
                         targets.add((Player) part);
                     }
                 }
-            } catch (IllegalArgumentException e){
+            } catch (IllegalArgumentException e) {
                 source.sendMessage(ChatUtils.chat(errorMalformedTargeter.replace("%error%", e.getMessage())));
                 return targets;
             }
         } else {
             Player target = Bukkit.getServer().getPlayer(selector);
-            if (target == null){
+            if (target == null) {
                 source.sendMessage(ChatUtils.chat(errorPlayerNotFound));
                 return targets;
             }

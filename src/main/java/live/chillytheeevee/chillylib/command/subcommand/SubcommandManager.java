@@ -1,11 +1,11 @@
-package live.chillytheeevee.command.subcommand;
+package live.chillytheeevee.chillylib.command.subcommand;
 
 import org.bukkit.Bukkit;
 import org.bukkit.command.PluginCommand;
 import org.bukkit.plugin.java.JavaPlugin;
-import live.chillytheeevee.command.BaseCommand;
-import live.chillytheeevee.config.Config;
-import live.chillytheeevee.config.ConfigManager;
+import live.chillytheeevee.chillylib.command.BaseCommand;
+import live.chillytheeevee.chillylib.config.Config;
+import live.chillytheeevee.chillylib.config.ConfigManager;
 
 import java.util.HashMap;
 import java.util.Map;

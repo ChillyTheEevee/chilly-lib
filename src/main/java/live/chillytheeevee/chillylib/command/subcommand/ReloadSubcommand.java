@@ -1,13 +1,13 @@
-package live.chillytheeevee.command.subcommand;
+package live.chillytheeevee.chillylib.command.subcommand;
 
 import org.bukkit.Sound;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
-import live.chillytheeevee.config.Config;
-import live.chillytheeevee.config.ConfigManager;
-import live.chillytheeevee.utility.ChatUtils;
+import live.chillytheeevee.chillylib.config.Config;
+import live.chillytheeevee.chillylib.config.ConfigManager;
+import live.chillytheeevee.chillylib.utility.ChatUtils;
 
 import java.util.List;
 import java.util.Objects;

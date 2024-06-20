@@ -1,4 +1,4 @@
-package live.chillytheeevee.config;
+package live.chillytheeevee.chillylib.config;
 
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;

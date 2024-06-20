@@ -1,8 +1,8 @@
-package live.chillytheeevee.command;
+package live.chillytheeevee.chillylib.command;
 
-import live.chillytheeevee.command.subcommand.Subcommand;
-import live.chillytheeevee.config.Config;
-import live.chillytheeevee.utility.ChatUtils;
+import live.chillytheeevee.chillylib.command.subcommand.Subcommand;
+import live.chillytheeevee.chillylib.config.Config;
+import live.chillytheeevee.chillylib.utility.ChatUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabExecutor;

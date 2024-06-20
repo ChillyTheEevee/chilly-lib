@@ -1,4 +1,4 @@
-package live.chillytheeevee.nbt;
+package live.chillytheeevee.chillylib.nbt;
 
 import org.bukkit.NamespacedKey;
 import org.bukkit.block.TileState;
