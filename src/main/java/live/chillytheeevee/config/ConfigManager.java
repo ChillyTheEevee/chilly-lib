@@ -1,4 +1,4 @@
-package world.sc2.config;
+package live.chillytheeevee.config;
 
 import org.bukkit.plugin.java.JavaPlugin;
 
