@@ -1,11 +1,11 @@
-package live.chillytheeevee.command;
+package world.sc2.command;
 
-import live.chillytheeevee.command.subcommand.Subcommand;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabExecutor;
 import org.bukkit.plugin.Plugin;
 import org.jetbrains.annotations.NotNull;
+import world.sc2.command.subcommand.Subcommand;
 import world.sc2.config.Config;
 import world.sc2.utility.ChatUtils;
 
