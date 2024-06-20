@@ -1,6 +1,5 @@
-package live.chillytheeevee.utility;
+package live.chillytheeevee.chillylib.utility;
 
-import live.chillytheeevee.utility.EntityUtils;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Projectile;

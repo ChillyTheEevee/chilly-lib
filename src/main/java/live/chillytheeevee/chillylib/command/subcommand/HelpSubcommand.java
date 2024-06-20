@@ -1,10 +1,10 @@
-package live.chillytheeevee.command.subcommand;
+package live.chillytheeevee.chillylib.command.subcommand;
 
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
-import live.chillytheeevee.config.Config;
-import live.chillytheeevee.utility.ChatUtils;
+import live.chillytheeevee.chillylib.config.Config;
+import live.chillytheeevee.chillylib.utility.ChatUtils;
 
 import java.util.*;
 

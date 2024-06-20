@@ -1,4 +1,4 @@
-package live.chillytheeevee.utility;
+package live.chillytheeevee.chillylib.utility;
 
 import org.bukkit.Location;
 

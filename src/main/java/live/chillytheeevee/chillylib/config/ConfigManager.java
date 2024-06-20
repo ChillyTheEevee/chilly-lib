@@ -1,4 +1,4 @@
-package live.chillytheeevee.config;
+package live.chillytheeevee.chillylib.config;
 
 import org.bukkit.plugin.java.JavaPlugin;
 
