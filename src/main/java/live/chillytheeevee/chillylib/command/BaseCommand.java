@@ -29,8 +29,9 @@ public class BaseCommand implements TabExecutor {
 
     /**
      * Constructs BaseCommand for the given plugin using the map of commands and the plugin's baseCommandConfig.
-     * @param plugin The plugin to create a BaseCommand for.
-     * @param commandMap A map of all subcommands registered for the plugin.
+     *
+     * @param plugin            The plugin to create a BaseCommand for.
+     * @param commandMap        A map of all subcommands registered for the plugin.
      * @param baseCommandConfig The {@link Config} for this BaseCommand.
      */
     public BaseCommand(Plugin plugin, Map<String, Subcommand> commandMap, Config baseCommandConfig) {
@@ -70,13 +71,13 @@ public class BaseCommand implements TabExecutor {
         for (String subCommand : commandMap.keySet()) {
             if (args[0].equalsIgnoreCase(subCommand)) {
                 boolean hasPermission = false;
-                for (String permission : commandMap.get(subCommand).getRequiredPermission()){
-                    if (sender.hasPermission(permission)){
+                for (String permission : commandMap.get(subCommand).getRequiredPermission()) {
+                    if (sender.hasPermission(permission)) {
                         hasPermission = true;
                         break;
                     }
                 }
-                if (!hasPermission){
+                if (!hasPermission) {
                     sender.sendMessage(ChatUtils.chat(baseCommandConfig.get().getString(WARNING_NO_PERMISSION_KEY)));
                     return true;
                 }

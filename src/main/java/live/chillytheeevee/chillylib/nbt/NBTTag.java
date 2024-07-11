@@ -21,7 +21,8 @@ public class NBTTag<T, Z> {
 
     /**
      * Creates a new NBTTag Object without starting data.
-     * @param namespacedKey The {@link NamespacedKey} of this NBT Tag.
+     *
+     * @param namespacedKey      The {@link NamespacedKey} of this NBT Tag.
      * @param persistentDataType The data type of this NBT Tag.
      */
     public NBTTag(NamespacedKey namespacedKey, PersistentDataType<T, Z> persistentDataType) {
@@ -32,9 +33,10 @@ public class NBTTag<T, Z> {
 
     /**
      * Creates a new NBTTag Object with initially stored data.
-     * @param namespacedKey The {@link NamespacedKey} of this NBT Tag.
+     *
+     * @param namespacedKey      The {@link NamespacedKey} of this NBT Tag.
      * @param persistentDataType The data type of this NBT Tag.
-     * @param defaultData The data initially stored within this NBT Tag.
+     * @param defaultData        The data initially stored within this NBT Tag.
      */
     public NBTTag(NamespacedKey namespacedKey, PersistentDataType<T, Z> persistentDataType, Z defaultData) {
         this.namespacedKey = namespacedKey;
@@ -65,6 +67,7 @@ public class NBTTag<T, Z> {
 
     /**
      * Applies this NBT Tag to the {@link ItemStack} given.
+     *
      * @param item The {@link ItemStack} to apply this NBT Tag to.
      * @throws IllegalStateException if called when default data was not supplied to the NBT Tag.
      */
@@ -80,6 +83,7 @@ public class NBTTag<T, Z> {
 
     /**
      * Applies this NBT Tag to the {@link PersistentDataHolder} given.
+     *
      * @param persistentDataHolder The {@link PersistentDataHolder} to apply this NBT Tag to.
      * @throws IllegalStateException if called when default data was not supplied to the NBT Tag.
      */
@@ -94,6 +98,7 @@ public class NBTTag<T, Z> {
 
     /**
      * Applies this NBT Tag to the {@link TileState} given.
+     *
      * @param tileState The {@link TileState} to apply this NBT Tag to.
      * @throws IllegalStateException if called when default data was not supplied to this NBT Tag.
      */
@@ -109,6 +114,7 @@ public class NBTTag<T, Z> {
 
     /**
      * Applies this NBT Tag to the {@link ItemStack} with the data given.
+     *
      * @param item The {@link ItemStack} to apply this NBT Tag to.
      * @param data The data to apply when applying this NBT Tag.
      */
@@ -120,8 +126,9 @@ public class NBTTag<T, Z> {
 
     /**
      * Applies this NBT Tag to the {@link PersistentDataHolder} with the data given.
+     *
      * @param persistentDataHolder The {@link PersistentDataHolder} to apply this NBT Tag to.
-     * @param data The data to apply when applying this NBT Tag.
+     * @param data                 The data to apply when applying this NBT Tag.
      */
     public void applyTag(@NotNull PersistentDataHolder persistentDataHolder, Z data) {
         PersistentDataContainer dataContainer = persistentDataHolder.getPersistentDataContainer();
@@ -130,8 +137,9 @@ public class NBTTag<T, Z> {
 
     /**
      * Applies this NBT Tag to the {@link TileState} with the data given.
+     *
      * @param tileState The {@link TileState} to apply this NBT Tag to.
-     * @param data The data to apply when applying this NBT Tag.
+     * @param data      The data to apply when applying this NBT Tag.
      */
     public void applyTag(@NotNull TileState tileState, Z data) {
         PersistentDataContainer dataContainer = tileState.getPersistentDataContainer();
@@ -141,6 +149,7 @@ public class NBTTag<T, Z> {
 
     /**
      * Removes this NBTTag and all stored data from the {@link ItemStack} given.
+     *
      * @param item The {@link ItemStack} to remove this NBT Tag from.
      */
     public void removeTag(@NotNull ItemStack item) {
@@ -151,6 +160,7 @@ public class NBTTag<T, Z> {
 
     /**
      * Removes this NBTTag and all stored data from the {@link PersistentDataHolder} given.
+     *
      * @param persistentDataHolder The {@link PersistentDataHolder} to remove this NBT Tag from.
      */
     public void removeTag(@NotNull PersistentDataHolder persistentDataHolder) {
@@ -160,6 +170,7 @@ public class NBTTag<T, Z> {
 
     /**
      * Removes this NBTTag and all stored data from the {@link TileState} given.
+     *
      * @param tileState The {@link TileState} to remove this NBT Tag from.
      */
     public void removeTag(@NotNull TileState tileState) {
@@ -170,6 +181,7 @@ public class NBTTag<T, Z> {
 
     /**
      * Retrieves the data stored within the NBTTag of the given {@link ItemStack}
+     *
      * @param item The {@link ItemStack} to get the data of this NBT Tag from.
      * @return the data mapped within the NBTTag of the {@link ItemStack} or null if the {@link ItemStack} does not
      * contain this NBTTag
@@ -181,6 +193,7 @@ public class NBTTag<T, Z> {
 
     /**
      * Retrieves the data stored within the NBTTag of the given {@link PersistentDataHolder}
+     *
      * @param persistentDataHolder The {@link PersistentDataHolder} to get the data of this NBT Tag from.
      * @return the data mapped within the NBTTag of the {@link PersistentDataHolder} or null if the
      * {@link PersistentDataHolder} does not contain this NBTTag
@@ -192,24 +205,27 @@ public class NBTTag<T, Z> {
 
     /**
      * Returns true if the given {@link ItemStack} contains this NBT Tag.
+     *
      * @param item The ItemStack to check
      * @return true if the given ItemStack contains this NBT Tag.
      */
-     public boolean hasTag(@NotNull ItemStack item) {
+    public boolean hasTag(@NotNull ItemStack item) {
         return item.getItemMeta().getPersistentDataContainer().has(namespacedKey);
-     }
+    }
 
     /**
      * Returns true if the given {@link PersistentDataHolder} contains this NBT Tag.
+     *
      * @param persistentDataHolder The PersistentDataHolder to check
      * @return true if the given PersistentDataHolder contains this NBT Tag.
      */
-     public boolean hasTag(@NotNull PersistentDataHolder persistentDataHolder) {
+    public boolean hasTag(@NotNull PersistentDataHolder persistentDataHolder) {
         return persistentDataHolder.getPersistentDataContainer().has(namespacedKey);
-     }
+    }
 
     /**
      * Returns true if the given {@link TileState} contains this NBT Tag.
+     *
      * @param tileState The TileState to check
      * @return true if the given TileState contains this NBT Tag.
      */
