@@ -18,15 +18,17 @@ import java.util.stream.Collectors;
  * Read the new file and scan for comments and ignored sections, if ignored section is found it is treated as a comment.
  * Read and write each line of the new config, if the old config has value for the given key it writes that value in the new config.
  * If a key has an attached comment above it, it is written first.
+ *
  * @author tchristofferson
  */
 public class ConfigUpdater {
 
     /**
      * Update a yaml file from a resource inside your plugin jar
-     * @param plugin Your plugin
-     * @param resourceName The yaml file name to update from, typically config.yml
-     * @param toUpdate The yaml file to update
+     *
+     * @param plugin          Your plugin
+     * @param resourceName    The yaml file name to update from, typically config.yml
+     * @param toUpdate        The yaml file to update
      * @param ignoredSections List of sections to ignore and copy from the current config
      * @throws IOException If an IOException occurs
      */
@@ -67,7 +69,8 @@ public class ConfigUpdater {
     }
 
     private static void writeWithFilter(FileConfiguration newConfig, FileConfiguration oldConfig, Map<String, String> comments, List<String> includedSections, BufferedWriter writer, Yaml yaml) throws IOException {
-        outer: for (String key : newConfig.getKeys(true)) {
+        outer:
+        for (String key : newConfig.getKeys(true)) {
             String[] keys = key.split("\\.");
             String actualKey = keys[keys.length - 1];
             String comment = comments.remove(key);
@@ -116,7 +119,8 @@ public class ConfigUpdater {
     //Write method doing the work.
     //It checks if key has a comment associated with it and writes comment then the key and value
     private static void write(FileConfiguration newConfig, FileConfiguration oldConfig, Map<String, String> comments, List<String> ignoredSections, BufferedWriter writer, Yaml yaml) throws IOException {
-        outer: for (String key : newConfig.getKeys(true)) {
+        outer:
+        for (String key : newConfig.getKeys(true)) {
             String[] keys = key.split("\\.");
             String actualKey = keys[keys.length - 1];
             String comment = comments.remove(key);
@@ -236,7 +240,8 @@ public class ConfigUpdater {
         StringBuilder keyBuilder = new StringBuilder();
         int lastLineIndentCount = 0;
 
-        outer: for (String line : lines) {
+        outer:
+        for (String line : lines) {
             if (line != null && line.trim().startsWith("-"))
                 continue;
 

@@ -18,45 +18,45 @@ import java.util.Objects;
  */
 public class ReloadSubcommand extends Subcommand {
 
-	private final ConfigManager configManager;
-	private final JavaPlugin plugin;
+    private final ConfigManager configManager;
+    private final JavaPlugin plugin;
 
-	private static final String reloadSuccessfulMessageKey = "messages.reload_successful";
+    private static final String reloadSuccessfulMessageKey = "messages.reload_successful";
 
-	public ReloadSubcommand(Config config, JavaPlugin plugin, ConfigManager configManager){
-		super(config);
-		this.plugin = plugin;
-		this.configManager = configManager;
-	}
+    public ReloadSubcommand(Config config, JavaPlugin plugin, ConfigManager configManager) {
+        super(config);
+        this.plugin = plugin;
+        this.configManager = configManager;
+    }
 
-	@Override
-	public boolean onCommand(CommandSender sender, String[] args) {
-		configManager.reloadConfigs();
+    @Override
+    public boolean onCommand(CommandSender sender, String[] args) {
+        configManager.reloadConfigs();
 
-		if (sender instanceof Player player) {
-			player.playSound(player.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 1f, 2f);
-		}
-		sender.sendMessage(ChatUtils.chat(config.get().getString(reloadSuccessfulMessageKey)));
-		return true;
-	}
+        if (sender instanceof Player player) {
+            player.playSound(player.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 1f, 2f);
+        }
+        sender.sendMessage(ChatUtils.chat(config.get().getString(reloadSuccessfulMessageKey)));
+        return true;
+    }
 
-	@Override
-	public List<String> onTabComplete(CommandSender sender, String[] args) {
-		return null;
-	}
+    @Override
+    public List<String> onTabComplete(CommandSender sender, String[] args) {
+        return null;
+    }
 
-	@Override
-	public String[] getHelpEntry() {
-		YamlConfiguration config = this.config.get();
-		String pluginName = plugin.getName().toLowerCase();
-		return new String[]{
-				ChatUtils.chat("&8&m                                             "),
-				ChatUtils.chat("&d" + Objects.requireNonNull(config.getString(USAGE_KEY))
-						.replace("%s", pluginName)),
-				ChatUtils.chat("&7" + Objects.requireNonNull(config.getString(DESCRIPTION_KEY))
-						.replace("%s", pluginName)),
-				ChatUtils.chat("&7> &d" + Objects.requireNonNull(config.getString(PERMISSION_KEY))
-						.replace("%s", pluginName)),
-		};
-	}
+    @Override
+    public String[] getHelpEntry() {
+        YamlConfiguration config = this.config.get();
+        String pluginName = plugin.getName().toLowerCase();
+        return new String[]{
+                ChatUtils.chat("&8&m                                             "),
+                ChatUtils.chat("&d" + Objects.requireNonNull(config.getString(USAGE_KEY))
+                        .replace("%s", pluginName)),
+                ChatUtils.chat("&7" + Objects.requireNonNull(config.getString(DESCRIPTION_KEY))
+                        .replace("%s", pluginName)),
+                ChatUtils.chat("&7> &d" + Objects.requireNonNull(config.getString(PERMISSION_KEY))
+                        .replace("%s", pluginName)),
+        };
+    }
 }
